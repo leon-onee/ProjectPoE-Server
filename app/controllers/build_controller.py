@@ -1,13 +1,13 @@
-from app.models.build_model import BuildModel
+from app.services.build_parser_service import BuildParser
 
 
-class BuildController:
-    @staticmethod
-    def get_xml_from_url(url: str):
-        """Получает XML из URL (pastebin или pobb)."""
-        if "pastebin.com" in url:
-            return BuildModel.fetch_xml_from_url(url)
-        elif "pobb.in" in url:
-            return BuildModel.get_base64_from_pobb(url)
-        else:
-            raise ValueError("Поддерживаются только URL с pastebin.com и pobb.in")
+def fetch_xml_from_url(url: str) -> str:
+    """Контроллер для обработки URL и получения XML данных."""
+    parser = BuildParser(url)
+    return parser.fetch_xml_from_url()
+
+
+def fetch_xml_from_pobb(url: str) -> str:
+    """Контроллер для получения XML данных с pobb.in."""
+    parser = BuildParser(url)
+    return parser.get_xml_from_pobb()

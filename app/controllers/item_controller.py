@@ -1,7 +1,7 @@
-from app.models.item_model import ItemModel
+from app.services.item_parser_service import ItemParserService
 
-class ItemController:
-    @staticmethod
-    def parse_item(raw_text: str):
-        item = ItemModel(raw_text)
-        return item.get_full_item_info()
+
+def process_items_from_url(url: str) -> list:
+    """Контроллер для получения XML и парсинга всех предметов."""
+    parser = ItemParserService()
+    return parser.parse_items_from_xml(url)
